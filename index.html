@@ -16,7 +16,9 @@ body{font-family:Quicksand,system-ui,sans-serif;color:#fff;background:#170413;-w
 .blooms{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;contain:layout style}
 .bloom{position:absolute;top:50%;left:50%;width:var(--size);height:var(--size);object-fit:contain;user-select:none;-webkit-user-drag:none;will-change:transform,opacity;opacity:0;transform:translate3d(var(--sx),var(--sy),0) scale(.04) rotate(var(--rot0));filter:drop-shadow(0 10px 15px #4f102c88) saturate(var(--sat)) hue-rotate(var(--hue));}
 .bloom.seed{opacity:var(--seed-opacity);transform:translate3d(var(--sx),var(--sy),0) scale(var(--seed-scale)) rotate(var(--rot0))}
-.scene.started .bloom{opacity:var(--opacity);transform:translate3d(var(--dx),var(--dy),0) scale(var(--scale)) rotate(var(--rot));transition:transform var(--duration) cubic-bezier(.16,.69,.2,1.01) var(--delay),opacity 900ms ease var(--delay);}
+.scene.started .bloom{opacity:var(--opacity);transform:translate3d(var(--dx),var(--dy),0) scale(var(--scale)) rotate(var(--rot));transition:transform var(--duration) cubic-bezier(.12,.78,.18,1) var(--delay),opacity 850ms ease var(--delay);}
+.scene:not(.started) .bloom:not(.seed){visibility:hidden}.scene.started .bloom{visibility:visible}.scene.started .intro{animation:introGlow 3.4s ease both}@keyframes introGlow{0%,100%{filter:brightness(1)}50%{filter:brightness(1.12)}}
+.scene.started .bloom.seed{transition-duration:2.7s;filter:drop-shadow(0 14px 22px #5d133a99) saturate(var(--sat)) hue-rotate(var(--hue))}
 .petals,.sparkles{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
 .petal{position:absolute;left:var(--x);top:-10vh;width:var(--sz);height:calc(var(--sz)*.74);border-radius:84% 10% 79% 20%;background:radial-gradient(ellipse at 28% 30%,#fff0e7 0%,#ffc3cd 32%,#ee749b 80%,#ad3b68 100%);box-shadow:inset 0 0 4px #ffdfdf,0 0 6px #ffa8bb32;opacity:0;transform:rotate(var(--angle))}
 .scene.started .petal{animation:petalDrift var(--fall) linear var(--delay) infinite}
@@ -31,7 +33,7 @@ h1{font-family:'Playfair Display',Georgia,serif;margin:0;font-weight:700;letter-
 h1 span{color:#ff9ec5;text-shadow:0 0 17px #b8126680}
 .desc{font-size:clamp(12px,2.9vw,16px);color:#ffe1e7;line-height:1.9;margin:12px auto 26px;text-shadow:0 1px 7px #310516,0 0 18px #30041c}
 .btn{display:inline-flex;gap:14px;align-items:center;justify-content:center;min-width:224px;padding:12px 23px;border:1px solid #ffd0d3;border-radius:80px;background:linear-gradient(145deg,#ff8098 0%,#ff5b80 46%,#ee4e78 100%);color:white;box-shadow:0 4px 0 #a92b55,0 9px 27px #fa507ca6,inset 0 1px 3px #ffffff9e;cursor:pointer;touch-action:manipulation;transform:translateY(0);transition:transform .2s,filter .2s;font:700 15px Quicksand,system-ui,sans-serif;letter-spacing:.6px;text-shadow:0 1px 3px #8c2241}
-.btn:hover{filter:brightness(1.1);transform:translateY(-2px)}.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #a92b55,0 4px 16px #fa507ca6}
+.btn:disabled{cursor:default;filter:brightness(1.05)}.btn:hover{filter:brightness(1.1);transform:translateY(-2px)}.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #a92b55,0 4px 16px #fa507ca6}
 .btn:focus-visible,.x:focus-visible,.again:focus-visible{outline:3px solid #fff;outline-offset:4px}
 .envelope{position:relative;width:29px;height:23px;display:grid;place-items:center;filter:drop-shadow(1px 2px 2px #973b4c)}
 .envelope svg{width:28px;height:23px}.btn-copy{text-align:left;display:flex;flex-direction:column;align-items:start;line-height:1.24}.btn-copy small{font-size:9px;letter-spacing:.05px;font-weight:500;opacity:.95;margin-top:4px}.arrow{font-size:23px;margin-left:1px}
@@ -42,6 +44,12 @@ h1 span{color:#ff9ec5;text-shadow:0 0 17px #b8126680}
 .x{position:absolute;right:12px;top:9px;color:#8e3c5b;font-size:28px;line-height:1;border:0;background:transparent;padding:9px;cursor:pointer}.again{font:700 13px Quicksand,system-ui;color:#9b4462;background:#ffdee7;border:1px solid #efa3bf;border-radius:60px;padding:11px 21px;margin-top:10px;cursor:pointer}
 @media(max-width:580px){.scene{min-height:0}.intro{padding:26px 8px 32px}.pill{font-size:8.7px;letter-spacing:1.3px;padding:7px 12px;margin-bottom:18px}h1{font-size:clamp(31px,8.4vw,43px)}.desc{font-size:12px;margin:12px auto 24px}.btn{min-width:210px;padding:11px 19px}.hint{font-size:9px;letter-spacing:1px}}
 @media(prefers-reduced-motion:reduce){.scene.started .petal{animation-duration:16s}.scene.started .bloom{transition-duration:1.5s}}
+
+/* Lời thư được giữ nguyên, nhấn nhá nhẹ và đọc tốt trên điện thoại */
+.letter-message{text-align:left;max-width:365px;margin:0 auto}.letter-message p{font-size:14px;line-height:1.85;margin:0 0 17px}.letter-message strong{color:#a93464;font-weight:800}.letter-message em{color:#a94b75;font-style:italic}.letter-message .wish-ending{text-align:center;font-size:15px;color:#a73e6b;padding:12px 7px;border-top:1px solid #e9b7c4;border-bottom:1px solid #e9b7c4}.letter-message .signature{text-align:right;font:italic 16px Georgia,serif;color:#a34570;margin-top:23px}.letter-message .signature strong{font-weight:700}.letter h2{font-size:clamp(23px,5.5vw,29px);line-height:1.35}
+/* Hoa bay theo quỹ đạo xoắn thay vì chỉ phóng thẳng */
+.scene.started .bloom:not(.seed){transition:none;animation:flowerSpiral var(--duration) cubic-bezier(.16,.64,.16,1) var(--delay) both}
+@keyframes flowerSpiral{0%{opacity:0;transform:translate3d(var(--sx),var(--sy),0) scale(.04) rotate(var(--rot0))}38%{opacity:.92;transform:translate3d(var(--mx),var(--my),0) scale(calc(var(--scale)*.48)) rotate(var(--spin))}75%{opacity:1;transform:translate3d(var(--px),var(--py),0) scale(calc(var(--scale)*.88)) rotate(var(--pre-rot))}100%{opacity:var(--opacity);transform:translate3d(var(--dx),var(--dy),0) scale(var(--scale)) rotate(var(--rot))}}
 </style></head>
 <body>
 <main class="scene" id="scene">
@@ -63,10 +71,15 @@ h1 span{color:#ff9ec5;text-shadow:0 0 17px #b8126680}
 <div class="letter-backdrop" id="overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="letterTitle">
  <article class="letter"><button type="button" class="x" id="close" aria-label="Đóng thư">×</button>
  <img id="letterFlower" class="letter-flower" alt="Bông hoa hồng màu hồng" />
- <h2 id="letterTitle">Gửi đến bạn,</h2>
- <p>Giữa rất nhiều điều đẹp đẽ trên thế giới này, mong hôm nay bạn cũng tìm thấy một lý do để mỉm cười.</p>
- <p>Chúc bạn luôn rạng rỡ như những đóa hoa và có thật nhiều khoảnh khắc đáng nhớ. ♡</p>
- <p style="font:italic 20px 'Playfair Display',Georgia,serif;color:#ac5277">Một chút yêu thương dành riêng cho bạn.</p>
+ <h2 id="letterTitle">Gửi đến các bạn nữ thân mến 🌷</h2>
+ <div class="letter-message">
+ <p>Nhân ngày <strong>20/10</strong>, chúc các bạn luôn <strong>xinh đẹp, rạng rỡ</strong> và gặp thật nhiều điều dịu dàng trong cuộc sống.</p>
+ <p>Mong rằng những năm tháng <em>thanh xuân</em> này sẽ mang đến cho các bạn thật nhiều niềm vui, những kỷ niệm đáng nhớ và cả những <strong>ước mơ dần trở thành hiện thực.</strong></p>
+ <p>Chúc các bạn luôn <strong>đủ mạnh mẽ</strong> để theo đuổi điều mình muốn, <strong>đủ tự tin</strong> để là chính mình và <strong>đủ may mắn</strong> để luôn có người trân trọng những điều nhỏ bé nơi các bạn.</p>
+ <p>Hy vọng rằng, không chỉ hôm nay mà cả những ngày bình thường nhất, các bạn vẫn luôn <em>giữ được nụ cười trên môi.</em></p>
+ <p class="wish-ending">Chúc các bạn một ngày <strong>20/10 thật trọn vẹn và đáng nhớ!</strong> 💗</p>
+ <p class="signature">With love, from <strong>K52C-SPKHTN.</strong> ♡</p>
+ </div>
  <button class="again" type="button" id="again">Xem lại hoa nở ↻</button>
  </article>
 </div>
@@ -91,12 +104,12 @@ function makeFlower(i,initial){
  let sz=initial?between(mobile?65:83,mobile?104:130):between(mobile?100:170,120,245);
  // Large blooms are intentionally not emoji or unicode. Each is a photographic transparent image.
  if(!initial)sz=between(mobile?95:130,mobile?188:238);
- let x,y;
+ let x,y,ring=0;
  if(initial){const theta=i*2.39996;x=Math.cos(theta)*between(7,mobile?49:83);y=Math.sin(theta)*between(6,mobile?50:70);}
- else {const ang=between(0,Math.PI*2),radius=Math.sqrt(rnd());x=Math.cos(ang)*radius*W*.67;y=Math.sin(ang)*radius*H*.70;}
- const sx=initial?x:between(-35,35),sy=initial?y:between(-32,32);
- const rot=between(-28,28);const endScale=initial?between(1.2,1.65):between(.69,1.38);
- img.style.cssText=`--size:${sz}px;--sx:${sx-sz/2}px;--sy:${sy-sz/2}px;--dx:${x-sz/2}px;--dy:${y-sz/2}px;--rot0:${between(-28,28)}deg;--rot:${rot}deg;--scale:${endScale};--seed-scale:${between(.45,.8)};--seed-opacity:${initial?between(.65,1):0};--opacity:${initial?1:between(.76,1)};--hue:${between(-14,12)}deg;--sat:${between(.84,1.17)};--duration:${initial?between(2300,3400):between(2700,4500)}ms;--delay:${initial?between(0,350):between(0,1600)}ms;z-index:${Math.floor(between(0,5))};`;
+ else {const ang=between(0,Math.PI*2);ring=Math.floor(i/23);const radius=.15+ring*.19+between(-.075,.075);x=Math.cos(ang)*radius*W*.88;y=Math.sin(ang)*radius*H*1.04;}
+ const sx=initial?x:between(-24,24),sy=initial?y:between(-20,20);
+ const rot=between(-28,28);const swirl=between(-1,1)*Math.min(W,H)*.26;const endScale=initial?between(1.2,1.65):between(.69,1.38);
+ img.style.cssText=`--size:${sz}px;--sx:${sx-sz/2}px;--sy:${sy-sz/2}px;--dx:${x-sz/2}px;--dy:${y-sz/2}px;--mx:${x*.38-sz/2+swirl}px;--my:${y*.38-sz/2-swirl}px;--px:${x*.82-sz/2-swirl*.34}px;--py:${y*.82-sz/2+swirl*.34}px;--spin:${rot+between(100,190)}deg;--pre-rot:${rot+between(-55,55)}deg;--rot0:${between(-28,28)}deg;--rot:${rot}deg;--scale:${endScale};--seed-scale:${between(.45,.8)};--seed-opacity:${initial?between(.65,1):0};--opacity:${initial?1:between(.76,1)};--hue:${between(-14,12)}deg;--sat:${between(.84,1.17)};--duration:${initial?between(2300,3400):between(2700,3900)}ms;--delay:${initial?between(0,200):ring*390+between(80,550)}ms;z-index:${Math.floor(between(0,5))};`;
  blooms.appendChild(img);
 }
 // Initially a small, fully STATIC bouquet sits behind the headline.
@@ -112,13 +125,13 @@ for(let i=0;i<39;i++){
 let started=false;
 function showLetter(){overlay.classList.add('show');overlay.setAttribute('aria-hidden','false');document.getElementById('close').focus({preventScroll:true});}
 function hideLetter(){overlay.classList.remove('show');overlay.setAttribute('aria-hidden','true');openBtn.focus({preventScroll:true});}
-function begin(){if(!started){started=true;requestAnimationFrame(()=>scene.classList.add('started'));openBtn.setAttribute('aria-label','Mở lá thư');document.getElementById('btnText').textContent='MỞ LÁ THƯ';document.getElementById('btnSub').textContent='Hoa đã nở rồi, mở thư nhé ♡';}else showLetter();}
+function begin(){if(!started){started=true;requestAnimationFrame(()=>scene.classList.add('started'));openBtn.setAttribute('aria-label','Mở lá thư sau khi hoa nở');openBtn.disabled=true;setTimeout(()=>{openBtn.disabled=false;document.getElementById('btnText').textContent='MỞ LÁ THƯ';document.getElementById('btnSub').textContent='Hoa đã nở rồi, mở thư nhé ♡';},3200);}else showLetter();}
 openBtn.addEventListener('click',begin);
 document.getElementById('close').addEventListener('click',hideLetter);
 overlay.addEventListener('click',e=>{if(e.target===overlay)hideLetter();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('show'))hideLetter();});
 document.getElementById('again').addEventListener('click',()=>{
- hideLetter();scene.classList.remove('started');started=false;
+ hideLetter();scene.classList.remove('started');started=false;openBtn.disabled=false;
  document.getElementById('btnText').textContent='VÀO THƯ';document.getElementById('btnSub').textContent='Nhấn để ngắm hoa nở nha ♡';openBtn.setAttribute('aria-label','Nhấn để hoa nở');
 });
 })();
