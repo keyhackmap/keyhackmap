@@ -1,0 +1,13 @@
+{
+  "name": "hpu2-study-monitor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Personal remote HPU2 study dashboard with Playwright browser session",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js"
+  },
+  "engines": {"node": ">=20"},
+  "dependencies": {"playwright": "1.56.1"}
+}

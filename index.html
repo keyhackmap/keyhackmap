@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="color-scheme" content="dark">
+  <title>HPU2 • Study Monitor</title>
+  <style>
+    :root{--bg:#080e1b;--surface:#121c30;--surface2:#18243a;--line:#27344d;--text:#eef4ff;--muted:#91a2ba;--blue:#6dc2ff;--mint:#77efbf;--orange:#ffc66e;--red:#ff8a8a}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(ellipse 90% 20% at 50% -8%,#19436a 0%,transparent 95%),var(--bg);color:var(--text);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    button,input{font:inherit} button{cursor:pointer} button:disabled{opacity:.4;cursor:not-allowed}
+    .container{max-width:1100px;margin:auto;padding:20px 16px 75px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:30px}
+    .brand{display:flex;align-items:center;gap:12px}.logo{display:grid;place-items:center;background:linear-gradient(135deg,#4db2ff,#70f3c2);width:43px;height:43px;border-radius:14px;color:#081424;font-size:22px;font-weight:900;box-shadow:0 4px 30px #4db2ff30}
+    h1,h2,h3,p{margin:0} .brand h1{font-size:19px;letter-spacing:-.5px;line-height:1.1}.eyebrow{font-size:11px;letter-spacing:2.3px;font-weight:800;color:var(--mint);margin-bottom:5px}
+    .tag{display:inline-flex;align-items:center;gap:7px;border-radius:25px;padding:6px 11px;background:#1b2c43;color:#9fc4f5;font-size:12px;font-weight:700;border:1px solid #344969}.dot{width:7px;height:7px;border-radius:50%;background:#91a0b5}.tag.running .dot{background:var(--mint);box-shadow:0 0 0 4px #77efbf20}.tag.question .dot{background:var(--orange)}.tag.paused .dot{background:var(--orange)}.tag.question{background:#443421;color:#ffe1a2;border-color:#9c772c}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.85fr);gap:18px}.left,.right{display:grid;align-content:start;gap:17px}.panel{border:1px solid var(--line);background:linear-gradient(160deg,#142036 0%,#101a2c 90%);border-radius:23px;padding:19px;box-shadow:0 8px 30px #00000019}
+    h2{font-size:17px;font-weight:800;letter-spacing:-.35px} .subtitle{color:var(--muted);font-size:12px;margin-top:3px}
+    .progressCard{background:linear-gradient(140deg,#183e5a,#14243e 54%,#153047);border:1px solid #31607b}.progressTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .heroNumber{font-size:52px;letter-spacing:-2.8px;line-height:1.15;font-weight:900;margin-top:22px;font-variant-numeric:tabular-nums}.heroNumber .outOf{color:#829bb5;font-size:25px;letter-spacing:-1px}.subNote{font-size:12px;color:#a5c0d5}
+    .bar{height:13px;border-radius:99px;background:#08182a;border:1px solid #2c4964;overflow:hidden;margin-top:23px}.bar>div{height:100%;width:0%;background:linear-gradient(90deg,#4a9dff,#80f9c4);border-radius:99px;transition:width .35s}.between{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:#bfd3e3}
+    .buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:17px}.btn{background:var(--surface2);border:1px solid #38506e;border-radius:13px;color:#e9f3ff;padding:12px 15px;font-weight:750;transition:transform .13s,background .13s}.btn:active{transform:scale(.98)}.btn.primary{background:linear-gradient(110deg,#6fbaff,#61e6c3);border-color:transparent;color:#092137;flex:1}.btn.warn{background:#422c28;border-color:#77503e;color:#ffd8a9}.btn.outline{background:transparent}.btn.small{padding:8px 12px;font-size:12px}
+    .previewFrame{margin-top:15px;background:#070b12;padding:7px;border:1px solid #314562;border-radius:17px;max-width:430px;margin-left:auto;margin-right:auto}.previewFrame img{display:block;width:100%;height:auto;border-radius:11px;aspect-ratio:430/900;object-fit:fill;cursor:crosshair;background:#0b1322;touch-action:manipulation}
+    .previewTools{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.previewTools .btn{flex:1;min-width:92px}.previewInstructions{color:var(--muted);font-size:12px;margin-top:12px;line-height:1.7}.calibrateMode{color:var(--orange);font-weight:800}
+    .headrow{display:flex;justify-content:space-between;align-items:center;gap:12px}.fields{display:grid;gap:10px;margin-top:15px}label{display:block;font-size:12px;color:#bdcce0;font-weight:700;margin-bottom:5px}input{width:100%;border:1px solid #34455f;background:#0c1628;color:#f3f7ff;border-radius:11px;padding:12px 12px;outline:none;min-height:45px}input:focus{border-color:var(--blue);box-shadow:0 0 0 3px #6dc2ff20}input::placeholder{color:#7184a1}.inlineFields{display:grid;grid-template-columns:1fr 1fr;gap:10px}.switchRow{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line);margin-top:6px}.switchRow p{font-size:12px;color:var(--muted)}.switch{position:relative;display:inline-flex;flex:none}.switch input{position:absolute;opacity:0;width:1px}.switch span{width:48px;height:27px;border-radius:15px;background:#40516c;display:block;transition:.2s}.switch span:after{content:"";position:absolute;top:4px;left:4px;width:19px;height:19px;background:#fff;border-radius:50%;transition:.2s}.switch input:checked+span{background:#53c7a6}.switch input:checked+span:after{transform:translateX(21px)}
+    .message{color:#c0d3eb;background:#0d192c;padding:12px;border:1px solid #253953;border-radius:12px;font-size:13px;margin-top:13px;overflow-wrap:anywhere}.message.error{color:#ffb7af;border-color:#6c3641}.questionBox{background:#3e3423;border:1px solid #73592a;border-radius:13px;margin-top:14px;padding:12px;font-size:12px}.questionBox strong{color:#ffe0a0}.questionBox p{margin-top:4px;color:#efdab2}.log{list-style:none;margin:12px 0 0;padding:0;max-height:220px;overflow:auto}.log li{border-top:1px solid #26374f;padding:9px 0;font-size:12px;color:#b6cbe4}.footnote{font-size:11px;color:#758ca7;margin-top:12px}.securityNote{font-size:12px;color:#b3c5d8;padding-left:14px;border-left:2px solid #409fdc;margin-top:12px}
+    .authBackdrop{position:fixed;inset:0;z-index:30;background:#08101df5;display:grid;place-items:center;padding:20px}.authCard{max-width:390px;width:100%;border:1px solid #335172;background:#132239;border-radius:25px;padding:28px;box-shadow:0 24px 75px #0007}.authCard h2{font-size:22px;margin:20px 0 7px}.authCard p{font-size:13px;color:#b5c9e0;margin-bottom:18px}.authCard .btn{width:100%;margin-top:13px}.errorText{color:#ffb3b3;font-size:12px;min-height:15px;margin-top:10px}
+    .interventionPanel{background:linear-gradient(150deg,#352a24,#192638);border:2px solid #c9984f;box-shadow:0 10px 36px #0003}
+    .interventionBadge{display:inline-block;border-radius:999px;background:#6a3e23;color:#ffe0af;padding:5px 10px;font-size:11px;font-weight:850;letter-spacing:1px}
+    .interventionPanel h2{font-size:22px;margin:10px 0 5px}.interventionPanel p{color:#eed8bd;font-size:13px}
+    .interventionPanel .btn{flex:1 1 180px}.interventionPanel .btn.primary{color:#102432}
+    #completionNote{font-size:12px;margin-top:11px;color:#ffd7aa;min-height:20px}
+    .previewFrame{overflow:auto}.previewFrame.zoomed img{width:650px;max-width:none}
+    .previewFrame.questionFrame{border:2px solid #d6a650;box-shadow:0 0 0 3px #d6a65022}
+
+    .attention{margin-top:16px;padding:15px;border:1px solid #a8864c;background:linear-gradient(130deg,#49361f,#242e3b);border-radius:16px}
+    .attention h3{font-size:16px;color:#ffdb9c}.attention p{font-size:12px;color:#f4dfbc;margin:6px 0 10px;overflow-wrap:anywhere}
+    .attention .attentionActions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.attention .attentionActions button{font-size:12px;padding:10px}
+    .answers{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:10px 0}.answers button{font-size:17px;font-weight:850;background:#26384d;border:1px solid #8d7851;color:#ffedca;border-radius:10px;padding:11px 0}
+    .answerPrompt{border-left:2px solid #c2a06b;padding-left:9px}
+    .attention small{display:block;color:#d9b887;font-size:11px;margin-top:12px;line-height:1.6}
+    @media(max-width:400px){.attention .attentionActions{grid-template-columns:1fr}}
+    .hidden{display:none!important} a{color:var(--blue)}
+    @media(max-width:760px){.container{padding:17px 13px 80px}.layout{grid-template-columns:1fr}.panel{padding:17px}.heroNumber{font-size:49px}header{margin-bottom:19px}}
+  </style>
+</head>
+<body>
+  <div class="authBackdrop" id="auth">
+    <form class="authCard" id="authForm">
+      <div class="logo">✦</div>
+      <h2>Study Monitor</h2>
+      <p>Nhập <b>mật khẩu quản lý riêng</b> do bạn đã đặt khi triển khai. Đây không phải mật khẩu HPU2.</p>
+      <label for="authPassword">Mật khẩu quản lý</label><input id="authPassword" type="password" autocomplete="current-password" placeholder="Mật khẩu quản lý..." required minlength="12">
+      <button class="btn primary" type="submit">Mở bảng điều khiển →</button>
+      <div class="errorText" id="authError"></div>
+    </form>
+  </div>
+  <main class="container" id="main">
+    <header>
+      <div class="brand"><div class="logo">✦</div><div><div class="eyebrow">REMOTE LEARNING</div><h1>HPU2 Study Monitor</h1></div></div>
+      <div class="tag" id="stateTag"><span class="dot"></span><span id="stateText">Chưa kết nối</span></div>
+    </header>
+    <div class="layout">
+      <section class="left">
+        <div class="panel interventionPanel hidden" id="interventionPanel" role="alert" aria-live="assertive">
+          <span class="interventionBadge">● CẦN BẠN TRẢ LỜI</span>
+          <h2 id="interventionHeading">Bài học đang chờ tương tác</h2>
+          <p id="interventionReason">Đã tạm dừng tự chuyển slide. Phiên HPU2 vẫn ở nguyên vị trí trên máy chủ.</p>
+          <p style="margin-top:8px" id="interventionSlide"></p>
+          <div class="buttons">
+            <button class="btn primary" id="goAnswerBtn">↘ Xem màn hình & trả lời</button>
+            <button class="btn" id="resumeBtn">✓ Kiểm tra & tiếp tục</button>
+          </div>
+          <div class="buttons"><button class="btn outline small" id="forceResumeBtn">Tôi đã hoàn tất nhưng hệ thống không nhận diện</button></div>
+          <p id="completionNote">Hãy chạm đáp án hoặc ô nhập trên ảnh màn hình; sau khi hoàn tất, ứng dụng sẽ kiểm tra để chạy tiếp.</p>
+        </div>
+        <div class="panel progressCard">
+          <div class="progressTop"><div><div class="eyebrow">TIẾN ĐỘ BÀI HỌC</div><h2>Đang theo dõi slide</h2></div><span class="tag" id="sourceTag">Chờ dữ liệu</span></div>
+          <div class="heroNumber"><span id="slideNow">—</span><span class="outOf"> / <span id="slideTotal">51</span></span></div>
+          <p class="subNote" id="progressHint">Đăng nhập và mở khóa học để bắt đầu</p>
+          <div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBar"><div id="progressFill"></div></div>
+          <div class="between"><span id="percent">0%</span><span id="remaining">Còn — slide</span></div>
+          <div class="buttons"><button class="btn primary" id="startBtn">▶ Bắt đầu</button><button class="btn warn" id="pauseBtn">Ⅱ Tạm dừng</button><button class="btn outline" id="refreshBtn">↻ Kiểm tra</button></div>
+          <div class="message" id="message">Chưa có hoạt động.</div>
+          <div class="attention hidden" id="humanPanel" role="alert" aria-live="polite">
+            <h3>⚠️ Cần bạn thao tác trên bài học</h3>
+            <p id="humanReason">Ứng dụng đã tạm dừng tại câu hỏi.</p>
+            <p class="answerPrompt" id="humanPrompt"></p>
+            <div class="answers hidden" id="quickAnswers" aria-label="Chọn một trong bốn đáp án"></div>
+            <div class="attentionActions">
+              <button class="btn warn" id="gotoScreenBtn">↗ Mở màn hình để trả lời</button>
+              <button class="btn primary" id="verifyAnswerBtn">✓ Kiểm tra &amp; tiếp tục</button>
+              <button class="btn outline" id="forceContinueBtn">Tôi xác nhận đã xong</button>
+            </div>
+            <small>Hãy tự trả lời hoặc nhập nội dung trên ảnh điều khiển bên dưới. Web chỉ tự chạy lại nếu phát hiện câu hỏi đã được xử lý. Nút xác nhận là phương án dự phòng.</small>
+          </div>
+        </div>
+        <div class="panel" id="remotePanel">
+          <div class="headrow"><div><h2>Điều khiển trình duyệt</h2><p class="subtitle">Màn hình thật chạy trên máy chủ, không cần bật iPhone</p></div><span class="tag">430 × 900</span></div>
+          <div class="previewFrame" id="previewFrame"><img id="preview" alt="Ảnh màn hình trình duyệt HPU2 trên máy chủ"></div>
+          <div class="previewTools">
+            <button class="btn small" id="calibrateBtn">⊕ Chọn nút sang slide</button>
+            <button class="btn small" id="reloadPreviewBtn">↻ Tải ảnh</button><button class="btn small" id="zoomBtn">⤢ Phóng to</button>
+            <button class="btn small" id="scrollDownBtn">↓ Cuộn xuống</button>
+            <button class="btn small" id="scrollUpBtn">↑ Cuộn lên</button>
+          </div>
+          <div class="previewInstructions" id="previewInstructions">Chạm vào ảnh để bấm trực tiếp trong trình duyệt trên máy chủ. Trước khi chạy tự động, nhấn <b>Chọn nút sang slide</b>, rồi chạm vị trí nút mũi tên phải trên ảnh. Đánh dấu không bấm ngay.</div>
+          <div class="fields">
+            <div><label for="remoteType">Nhập đáp án vào ô đã chọn trên ảnh</label><input id="remoteType" placeholder="Ví dụ: nội dung hoặc câu trả lời..."></div>
+            <div class="buttons" style="margin:0"><button class="btn small" id="sendTypeBtn">Gõ chữ</button><button class="btn small" id="replaceTypeBtn">Thay nội dung ô</button><button class="btn small" id="replaceTypeBtn">Thay ô đang chọn</button><button class="btn small" id="enterBtn">↵ Enter</button><button class="btn small" id="tabBtn">Tab</button><button class="btn small" id="escBtn">Esc</button><button class="btn small" id="backspaceBtn">⌫ Xóa</button></div>
+          </div>
+          <div class="questionBox hidden" id="questionBox"><strong>Phát hiện câu hỏi A / B / C / D</strong><p id="quizInfo">Xem màn hình để kiểm tra câu hỏi.</p></div>
+        </div>
+      </section>
+      <section class="right">
+        <div class="panel">
+          <h2>1. Đăng nhập HPU2</h2><p class="subtitle">Chỉ gửi qua kết nối HTTPS đến máy chủ riêng bạn triển khai</p>
+          <form id="loginForm" class="fields" autocomplete="off">
+            <div><label for="studentId">Mã sinh viên / tên đăng nhập</label><input id="studentId" type="text" placeholder="Nhập mã sinh viên" required autocomplete="off"></div>
+            <div><label for="schoolPassword">Mật khẩu tài khoản HPU2</label><input id="schoolPassword" type="password" placeholder="Nhập mật khẩu HPU2" required autocomplete="off"></div>
+            <button class="btn primary" type="submit">Đăng nhập trên máy chủ →</button>
+          </form>
+          <p class="securityNote">Mật khẩu trường chỉ dùng để đăng nhập vào trang HPU2, không ghi vào mã nguồn, tệp hoặc nhật ký. Không chia sẻ URL quản lý và mật khẩu của bạn.</p>
+        </div>
+        <div class="panel">
+          <h2>2. Mở đúng bài 51 slide</h2><p class="subtitle">Bạn có thể điều hướng bằng màn hình từ xa hoặc dán link bài học sau khi đăng nhập</p>
+          <div class="fields"><div><label for="courseUrl">Link trang bài học (nếu có)</label><input id="courseUrl" type="url" placeholder="https://hoctructuyen.hpu2.edu.vn/..."></div>
+            <button class="btn" id="openBtn">Mở link trên máy chủ ↗</button></div>
+          <p class="footnote">Không có link? Hãy chạm lên ảnh xem trước để vào lớp và mở bài như bình thường.</p>
+        </div>
+        <div class="panel">
+          <h2>3. Thiết lập theo dõi</h2><p class="subtitle">Cấu hình cho bài SHCDSV — 51 slide</p>
+          <div class="fields"><div class="inlineFields"><div><label for="totalSlides">Tổng số slide</label><input id="totalSlides" type="number" min="1" max="500" value="51"></div><div><label for="slideSeconds">Giây mỗi slide</label><input id="slideSeconds" type="number" min="15" max="600" value="55"></div></div>
+            <div class="switchRow"><div><strong>Thử đáp án câu luyện tập</strong><p>Nếu có phản hồi sai, thử lại A → D tối đa bốn phương án. Không áp dụng bài có điểm.</p></div><label class="switch" aria-label="Cho phép thử lại câu hỏi luyện tập"><input id="autoPractice" type="checkbox"><span></span></label></div>
+            <button class="btn" id="saveBtn">Lưu thiết lập</button></div>
+          <p class="footnote">Điều kiện: player phải hiển thị đáp án/feedback đọc được. Không đảm bảo 100% với SCORM, H5P hay nội dung canvas. Nếu không xác định được, ứng dụng dừng để bạn xử lý.</p>
+        </div>
+        <div class="panel"><div class="headrow"><h2>Nhật ký hoạt động</h2><button class="btn small" id="closeBtn">Đóng phiên</button></div><ul class="log" id="log"><li>Chưa có bản ghi.</li></ul><p class="footnote">Máy chủ phải chạy 24/7. GitHub Pages chỉ đăng được giao diện tĩnh, không thể duy trì trình duyệt nền.</p></div>
+      </section>
+    </div>
+  </main>
+  <script>
+  (()=>{
+    const $ = id => document.getElementById(id);
+    let unlocked=false, calibrating=false, lastState=null, imageLoading=false, currentPhoto='';
+    const modeLabels={idle:'Chưa khởi tạo',ready:'Sẵn sàng',running:'Đang chạy',paused:'Tạm dừng',question:'Có câu hỏi',error:'Lỗi'};
+    const post=async (route,data={})=>{
+      const response=await fetch(route,{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+      const json=await response.json();
+      if(!response.ok)throw new Error(json.error||`Lỗi ${response.status}`);
+      return json;
+    };
+    const notify=(message,isError=false)=>{ $('message').textContent=message; $('message').classList.toggle('error',isError); };
+    const withAction=fn=>async ev=>{
+      if(ev)ev.preventDefault();
+      try {await fn();await fetchState();await loadPreview(true);}catch(err){notify(err.message,true);}
+    };
+    function view(st){
+      lastState=st;
+      const mode=st.mode||'idle';
+      $('stateTag').className='tag '+mode;
+      $('stateText').textContent=modeLabels[mode]||mode;
+      $('slideNow').textContent=st.current??'—';
+      $('slideTotal').textContent=st.total;
+      const pct=st.current!=null?Math.round(st.current/st.total*100):0;
+      $('progressFill').style.width=`${pct}%`;
+      $('progressBar').setAttribute('aria-valuenow',String(pct));
+      $('percent').textContent=pct+'%';
+      $('remaining').textContent=st.current!=null?`Còn ${Math.max(0,st.total-st.current)} slide`:'Còn — slide';
+      $('progressHint').textContent=st.current==null?'Chưa đọc được số trang từ nội dung bài':st.estimate?'Tiến độ ước tính theo số lần bấm, cần đối chiếu ảnh':'Tiến độ được đọc trực tiếp từ trang học';
+      $('sourceTag').textContent=st.current==null?'Chờ số slide':st.estimate?'Ước tính':'Trên HPU2';
+      if(document.activeElement!==$('message'))notify(st.message||'Sẵn sàng');
+      $('startBtn').disabled=mode==='running'||!st.configuredNext;
+      $('pauseBtn').disabled=mode!=='running';
+      $('calibrateBtn').textContent=calibrating?'CHẠM VÀO NÚT → TRÊN ẢNH':'⊕ Chọn nút sang slide';
+      $('calibrateBtn').classList.toggle('warn',calibrating);
+      $('previewInstructions').classList.toggle('calibrateMode',calibrating);
+      const q=st.quiz;
+      const intervention=st.intervention;
+      $('interventionPanel').classList.toggle('hidden',!intervention);
+      $('previewFrame').classList.toggle('questionFrame',!!intervention);
+      if(intervention){
+        const labels={choice:'Chọn đáp án trên HPU2',text:'Nhập đáp án trên HPU2',graded:'Bài kiểm tra cần bạn tự làm',blocked:'Không thể chuyển sang slide tiếp',interactive:'Bài học cần tương tác'};
+        $('interventionHeading').textContent=labels[intervention.kind]||'Cần bạn tương tác';
+        $('interventionReason').textContent=intervention.reason||'Tự chuyển slide đã dừng.';
+        $('interventionSlide').textContent='Vị trí tạm dừng: Slide '+(intervention.slideAtPause??'?')+'/'+st.total;
+      }
+      $('questionBox').classList.toggle('hidden',!q);
+      if(q) $('quizInfo').textContent='Đã thử: '+(q.tried?.join(', ')||'chưa có')+'. Hãy trả lời trên màn hình HPU2.';
+      const human=st.intervention;
+      $('humanPanel').classList.toggle('hidden',!human);
+      document.title=human?'⚠ Cần trả lời • HPU2':'HPU2 • Study Monitor';
+      if(human){
+        $('humanReason').textContent=human.reason||'Đang chờ bạn hoàn thành câu hỏi.';
+        $('humanPrompt').textContent=human.kind==='text'?'Câu hỏi cần nhập đáp án: hãy chạm ô nhập trong ảnh và dùng nút Gõ chữ.':human.kind==='blocked'?'Hãy xem màn hình HPU2 và hoàn thành thao tác còn thiếu.':'Hãy xem câu hỏi trên màn hình trực tiếp để tự chọn đáp án.';
+        $('forceContinueBtn').disabled=!human.actionAt;
+        const options=human.options;
+        const letters=options?['A','B','C','D'].filter(letter=>options[letter]):[];
+        $('quickAnswers').classList.toggle('hidden',letters.length!==4);
+        $('quickAnswers').replaceChildren(...letters.map(letter=>{
+          const btn=document.createElement('button');
+          btn.type='button';btn.textContent=letter;
+          btn.title=options[letter];btn.setAttribute('aria-label',letter+': '+options[letter]);
+          btn.addEventListener('click',withAction(async()=>post('/api/choose',{letter})));
+          return btn;
+        }));
+      }
+      $('log').replaceChildren(...(st.log?.length?st.log:['Chưa có hoạt động.']).map(line=>{const li=document.createElement('li');li.textContent=line;return li;}));
+      if(document.activeElement!==$('totalSlides'))$('totalSlides').value=st.config.total;
+      if(document.activeElement!==$('slideSeconds'))$('slideSeconds').value=st.config.seconds;
+      if(document.activeElement!==$('autoPractice'))$('autoPractice').checked=st.config.autoPractice;
+    }
+    async function fetchState(){
+      const resp=await fetch('/api/status',{cache:'no-store'});
+      if(resp.status===401){unlocked=false;$('auth').classList.remove('hidden');return;}
+      if(!resp.ok)throw new Error('Không kết nối được máy chủ.');
+      unlocked=true;$('auth').classList.add('hidden');view(await resp.json());
+    }
+    async function loadPreview(force=false){
+      if(!unlocked||imageLoading||(!force&&document.hidden))return;
+      imageLoading=true;
+      const src='/api/screenshot?t='+Date.now();
+      const img=new Image();
+      img.onload=()=>{$('preview').src=src;currentPhoto=src;imageLoading=false;};
+      img.onerror=()=>{imageLoading=false;};
+      img.src=src;
+    }
+    $('authForm').addEventListener('submit',async ev=>{
+      ev.preventDefault();$('authError').textContent='';
+      try{await post('/api/unlock',{password:$('authPassword').value});$('authPassword').value='';await fetchState();await loadPreview(true);}
+      catch(err){$('authError').textContent=err.message;}
+    });
+    $('loginForm').addEventListener('submit',withAction(async()=>{
+      const username=$('studentId').value, password=$('schoolPassword').value;
+      try{await post('/api/school-login',{username,password});}
+      finally{$('schoolPassword').value='';}
+    }));
+    $('openBtn').addEventListener('click',withAction(async()=>{
+      await post('/api/open',{url:$('courseUrl').value.trim()||'https://hoctructuyen.hpu2.edu.vn/'});
+    }));
+    $('saveBtn').addEventListener('click',withAction(async()=>{
+      await post('/api/config',{total:Number($('totalSlides').value),seconds:Number($('slideSeconds').value),autoPractice:$('autoPractice').checked});
+    }));
+    $('startBtn').addEventListener('click',withAction(async()=>post('/api/start')));
+    $('gotoScreenBtn').addEventListener('click',async()=>{
+      $('preview').scrollIntoView({behavior:'smooth',block:'center'});
+      await loadPreview(true);
+    });
+    $('verifyAnswerBtn').addEventListener('click',withAction(async()=>post('/api/resume')));
+    $('forceContinueBtn').addEventListener('click',withAction(async()=>{
+      if(!confirm('Chỉ tiếp tục nếu bạn đã hoàn thành câu hỏi trên HPU2. Bạn xác nhận chứ?'))return;
+      await post('/api/force-resume',{confirm:true});
+    }));
+    $('pauseBtn').addEventListener('click',withAction(async()=>post('/api/pause')));
+    $('refreshBtn').addEventListener('click',withAction(async()=>post('/api/refresh')));
+    $('closeBtn').addEventListener('click',withAction(async()=>{
+      if(!confirm('Đóng toàn bộ phiên HPU2 trên máy chủ? Bạn sẽ phải đăng nhập lại.'))return;
+      await post('/api/reset');
+    }));
+    $('reloadPreviewBtn').addEventListener('click',withAction(async()=>loadPreview(true)));
+    $('zoomBtn').addEventListener('click',()=>{
+      const zoom=$('previewFrame').classList.toggle('zoomed');
+      $('zoomBtn').textContent=zoom?'⤡ Thu nhỏ':'⤢ Phóng to';
+    });
+    $('goAnswerBtn').addEventListener('click',()=>{
+      $('remotePanel').scrollIntoView({behavior:'smooth',block:'start'});
+      loadPreview(true);
+    });
+    $('resumeBtn').addEventListener('click',async()=>{
+      $('completionNote').textContent='Đang kiểm tra trạng thái câu hỏi trên HPU2…';
+      try {await post('/api/resume');await fetchState();await loadPreview(true);}
+      catch(err){$('completionNote').textContent=err.message;}
+    });
+    $('forceResumeBtn').addEventListener('click',async()=>{
+      if(!confirm('Chỉ chọn khi bạn đã tự trả lời xong trên HPU2 và xác nhận bài học cho tiếp tục. Nếu chưa xong, có thể bỏ lỡ câu hỏi. Tiếp tục?'))return;
+      try{await post('/api/force-resume',{confirm:true});await fetchState();}
+      catch(err){$('completionNote').textContent=err.message;}
+    });
+    $('calibrateBtn').addEventListener('click',ev=>{ev.preventDefault();calibrating=!calibrating;if(lastState)view(lastState);});
+    // Dùng listener riêng để lấy tọa độ trên ảnh xem trước. Không gửi click khi đang hiệu chỉnh.
+    $('preview').addEventListener('click',async e=>{
+      e.preventDefault();
+      const rect=e.currentTarget.getBoundingClientRect();
+      const x=Math.max(0,Math.min(430,Math.round((e.clientX-rect.left)/rect.width*430)));
+      const y=Math.max(0,Math.min(900,Math.round((e.clientY-rect.top)/rect.height*900)));
+      try{
+        if(calibrating){await post('/api/calibrate',{x,y});calibrating=false;}
+        else await post('/api/tap',{x,y});
+        await fetchState();await loadPreview(true);
+      }catch(err){notify(err.message,true);}
+    });
+    $('sendTypeBtn').addEventListener('click',withAction(async()=>post('/api/type',{text:$('remoteType').value})));
+    $('replaceTypeBtn').addEventListener('click',withAction(async()=>post('/api/replace',{text:$('remoteType').value})));
+    $('replaceTypeBtn').addEventListener('click',withAction(async()=>post('/api/replace',{text:$('remoteType').value})));
+    $('enterBtn').addEventListener('click',withAction(async()=>post('/api/key',{key:'Enter'})));
+    $('tabBtn').addEventListener('click',withAction(async()=>post('/api/key',{key:'Tab'})));
+    $('escBtn').addEventListener('click',withAction(async()=>post('/api/key',{key:'Escape'})));
+    $('backspaceBtn').addEventListener('click',withAction(async()=>post('/api/key',{key:'Backspace'})));
+    $('scrollDownBtn').addEventListener('click',withAction(async()=>post('/api/scroll',{direction:1})));
+    $('scrollUpBtn').addEventListener('click',withAction(async()=>post('/api/scroll',{direction:-1})));
+    fetchState().then(()=>loadPreview(true)).catch(()=>{});
+    setInterval(()=>{if(unlocked)fetchState().catch(()=>{});},2500);
+    setInterval(()=>{if(unlocked)loadPreview().catch(()=>{});},3500);
+  })();
+  </script>
+</body></html>
